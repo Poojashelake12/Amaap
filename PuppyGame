@@ -1,0 +1,116 @@
+
+import java.util.*;
+
+public class PuppyGame {
+	   
+	    public static void searchPuppy(int totalFloors,int roomsPerFloor) {
+	    	Random random=new Random();
+	    	
+			//initial puppy and players positions
+	    	int puppyFloor = random.nextInt(totalFloors)+1;
+			int puppyRoom = random.nextInt(roomsPerFloor)+1;
+	    	int plr1Floor = random.nextInt(totalFloors)+1;
+			int plr1Room = random.nextInt(roomsPerFloor)+1;
+	    	int plr2Floor =random.nextInt(totalFloors)+1;
+			int plr2Room = random.nextInt(roomsPerFloor)+1;
+	    	
+	    	
+			int currPlayer=1;
+	    	while(true) {
+	    		for(int floor=1;floor<=totalFloors;floor++) {
+	    			for(int room=1;room<=roomsPerFloor;room++) {
+	    				if(floor==puppyFloor && room==puppyRoom) {
+							if(plr1Floor== puppyFloor && plr1Room == puppyRoom){
+								System.out.print("| *1 ");
+							}
+							else if(plr2Floor== puppyFloor && plr2Room == puppyRoom){
+								System.out.print("| *2 ");
+							}
+							else
+	    					   System.out.print("| *  ");
+	    				}
+	    				else if(floor==plr1Floor && room==plr1Room) {
+							if(floor==plr2Floor && room==plr2Room)
+	    					    System.out.print("| 12 ");
+							else{
+								System.out.print("| 1  ");
+							}
+	    				}
+	    				else if(floor==plr2Floor && room==plr2Room) {
+							if(floor==plr1Floor && room==plr1Room)
+	    					    System.out.print("| 21 ");
+							else{
+								System.out.print("| 2  ");
+							}
+	    				}
+	    				else {
+	    					 System.out.print("|    ");
+	    				}
+	    			}
+	    			System.out.println("| ");
+					for(int i=1;i<=roomsPerFloor;i++){
+	    		    System.out.print(" ---  ");
+	    	    }
+				System.out.println();
+	    		}
+				
+				
+	    	
+			//check if a player has found the puppy
+	    	if (plr1Floor== puppyFloor && plr1Room == puppyRoom) {
+                System.out.println("Player 1 found the puppy and Wins!!");
+                break;
+            }
+			if (plr2Floor== puppyFloor && plr2Room == puppyRoom) {
+                System.out.println("Player 2 found the puppy and Wins!!");
+                break;
+            }
+			
+			
+			
+			// randomly searching rooms turn by turn
+	    	int move=random.nextInt(4);  //0-up,1-down,2-left,3-right
+			
+	    	if(currPlayer==1) {
+				
+	    	    if(move==0 && plr1Floor>1)
+	    			plr1Floor--;
+	    		else if(move==1 && plr1Floor < totalFloors)
+	    			plr1Floor++;
+	    		else if(move==2 && plr1Room>1)
+	    			plr1Room--;
+	    		else if(move==3 && plr1Room < roomsPerFloor)
+	    			plr1Room++;
+				currPlayer=2;
+				System.out.println("player 1's trun");
+	    	}
+	    	else {
+				
+	    		if(move==0 && plr2Floor>1)
+	    			plr2Floor--;
+	    		else if(move==1 && plr2Floor < totalFloors)
+	    			plr2Floor++;
+	    		else if(move==2 && plr2Room>1)
+	    			plr2Room--;
+	    		else if(move==3 && plr2Room < roomsPerFloor)
+	    			plr2Room++;
+			   currPlayer=1;
+			   System.out.println("player 2's trun");
+	    	}
+	    	
+	    	}
+	    }
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter number of floors:");
+		int totalFloors=sc.nextInt();
+		System.out.println("Enter number of rooms");
+		int roomsPerFloor=sc.nextInt();
+		
+		PuppyGame obj=new PuppyGame();
+		obj.searchPuppy(totalFloors,roomsPerFloor);
+		sc.close();
+	}
+
+}
